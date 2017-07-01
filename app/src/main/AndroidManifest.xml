@@ -1,0 +1,22 @@
+<manifest package="com.quicklyric.romanizer"
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:fullBackupContent="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        tools:ignore="GoogleAppIndexingWarning">
+
+        <receiver
+            android:name=".RomanisationBroadcastReceiver"
+            android:exported="true"
+            tools:ignore="ExportedReceiver">
+            <intent-filter>
+                <action android:name="com.geecko.QuickLyric.ROMANIZE"/>
+            </intent-filter>
+        </receiver>
+
+    </application>
+</manifest>
