@@ -29,8 +29,8 @@ android {
     buildTypes {
         release {
             buildConfigField "Boolean", "REPORT_CRASH", 'true'
-            useProguard true
-            minifyEnabled true
+            useProguard false
+            minifyEnabled false
             signingConfig signingConfigs.release
             proguardFiles 'proguard-rules.pro', getDefaultProguardFile('proguard-android-optimize.txt')
         }
