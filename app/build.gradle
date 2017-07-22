@@ -37,6 +37,7 @@ android {
 
         debug {
             buildConfigField "Boolean", "REPORT_CRASH", 'false'
+            debuggable true
         }
     }
 
@@ -50,8 +51,9 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'me.xuender:unidecode:0.0.7'
     compile 'org.atilika.kuromoji:kuromoji:0.7.7'
+    testCompile 'junit:junit:4.12'
 }
