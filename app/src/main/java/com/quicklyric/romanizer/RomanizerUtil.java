@@ -2,6 +2,10 @@ package com.quicklyric.romanizer;
 
 import android.os.Build;
 
+import com.cybozu.labs.langdetect.Detector;
+import com.cybozu.labs.langdetect.DetectorFactory;
+import com.cybozu.labs.langdetect.LangDetectException;
+
 import org.atilika.kuromoji.Token;
 import org.atilika.kuromoji.Tokenizer;
 
@@ -27,25 +31,50 @@ import me.xuender.unidecode.Unidecode;
 public class RomanizerUtil {
 
     private static Tokenizer tokenizer = Tokenizer.builder().build();
+    private static boolean profileLoaded = false;
 
-    public static String romanize(String s) {
+    public static String romanize(String s, List<String> profiles) {
+        if (!profileLoaded) {
+            try {
+                DetectorFactory.loadProfile(profiles);
+                profileLoaded = true;
+            } catch (Exception ignored) {
+            }
+        }
         if (containsJapanese(s)) {
             tokenizer.tokenize(s);
+            boolean isInBrackets = false;
             List<Token> list = Tokenizer.builder().build().tokenize(s);
             StringBuilder builder = new StringBuilder();
             for (Token token : list) {
+                if (token.getSurfaceForm().contains("]")) {
+                    builder.append(token.getSurfaceForm());
+                    isInBrackets = false;
+                    continue;
+                } else if (token.getSurfaceForm().contains("[")) {
+                    builder.append(token.getSurfaceForm());
+                    isInBrackets = true;
+                    continue;
+                }
+                if (isInBrackets) {
+                    builder.append(token.getSurfaceForm());
+                    continue;
+                }
                 try {
                     builder.append(token.isKnown() ? token.getReading() : token.getSurfaceForm());
                 } catch (ArrayIndexOutOfBoundsException e) {
                     builder.append(token.getSurfaceForm());
                 }
-                if (!(token.getSurfaceForm().equals("<") || token.getSurfaceForm().equals("br") || token.getSurfaceForm().equals(">")))
-                    builder.append(" ");
+                if (!(token.getSurfaceForm().equals("<") || token.getSurfaceForm().equals("br") || token.getSurfaceForm().equals(">"))) {
+                    if (!(builder.toString().endsWith(" ") || builder.toString().endsWith("\n")))
+                        builder.append(" ");
+                }
             }
             s = builder.toString().trim();
             s = s.replaceAll("\\s+!", "!").replaceAll("\\s+\\?", "?").replaceAll("\\s+:", ":");
         }
-        return addSpacesBeforeUppercase(Unidecode.decode(s));
+        String output = addSpacesBeforeUppercase(Unidecode.decode(s));
+        return output.replaceAll(" +", " ");
     }
 
     public static boolean detectIdeographic(String s) {
@@ -88,7 +117,20 @@ public class RomanizerUtil {
             if (isJapanese(str.codePointAt(i)))
                 return true;
         }
-        return false;
+
+        Detector detector;
+        try {
+            detector = DetectorFactory.create();
+        } catch (LangDetectException e) {
+            e.printStackTrace();
+            return false;
+        }
+        detector.append(str);
+        try {
+            return "ja".equals(detector.detect());
+        } catch (LangDetectException e) {
+            return false;
+        }
     }
 
     private static boolean isJapanese(int codepoint) {
@@ -115,5 +157,9 @@ public class RomanizerUtil {
             }
         }
         return s;
+    }
+
+    public static boolean areProfilesLoaded() {
+        return profileLoaded;
     }
 }

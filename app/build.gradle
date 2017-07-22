@@ -6,6 +6,12 @@ repositories {
 }
 
 android {
+    sourceSets {
+        main {
+            assets.srcDirs = ['assets']
+        }
+    }
+
     compileSdkVersion 26
     buildToolsVersion "26.0.0"
     defaultConfig {
@@ -56,4 +62,5 @@ dependencies {
     compile 'me.xuender:unidecode:0.0.7'
     compile 'org.atilika.kuromoji:kuromoji:0.7.7'
     testCompile 'junit:junit:4.12'
+    compile 'com.cybozu.labs:langdetect:+'
 }
