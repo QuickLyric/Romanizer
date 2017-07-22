@@ -34,7 +34,11 @@ public class RomanizerUtil {
             List<Token> list = Tokenizer.builder().build().tokenize(s);
             StringBuilder builder = new StringBuilder();
             for (Token token : list) {
-                builder.append(token.isKnown() ? token.getReading() : token.getSurfaceForm());
+                try {
+                    builder.append(token.isKnown() ? token.getReading() : token.getSurfaceForm());
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    builder.append(token.getSurfaceForm());
+                }
                 if (!(token.getSurfaceForm().equals("<") || token.getSurfaceForm().equals("br") || token.getSurfaceForm().equals(">")))
                     builder.append(" ");
             }
