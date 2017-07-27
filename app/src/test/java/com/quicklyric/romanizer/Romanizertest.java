@@ -27,13 +27,15 @@ public class Romanizertest {
         String output = RomanizerUtil.romanize(text, null);
         Assert.assertTrue(output.contains("43.81"));
         Assert.assertFalse(output.contains("  "));
+        System.out.println(text);
+        System.out.println(output);
     }
 
     @Test
     public void testKorean() {
         String text = "나빠요 참 그대라는 사람\n" + "허락도 없이 왜 내맘 가져요\n" + "그대 때문에 난 힘겹게 살고만 있는데\n" + "그댄 모르잖아요\n" + "\n" + "알아요 나는 아니란 걸\n" + "눈길줄만큼 보잘것 없단걸\n" + "다만 가끔씩 그저 그미소\n" + "여기 내게도 나눠줄 순 없나요\n" + "비록 사랑은 아니라도\n" + "\n" + "언젠가 한번쯤은 돌아봐주겠죠\n" + "한없이 뒤에서 기다리면\n" + "오늘도 차마 못한 가슴속 한마디\n" + "그대 사랑합니다\n" + "\n" + "어제도 책상에 엎드려\n" + "그댈 그리다 잠들었나봐요\n" + "눈을 떠보니 눈물에 녹아 흩어져있던\n" + "시린 그대이름과 헛된 바램뿐인 낙서만\n" + "\n" + "언젠가 한번쯤은 돌아봐주겠죠\n" + "한없이 뒤에서 기다리면\n" + "오늘도 차마 못한 가슴속 한마디\n" + "그대 사랑합니다\n" + "\n" + "이젠 너무나도 내게 익숙한\n" + "그대 뒷모습을 바라보며\n" + "흐르는 눈물처럼 소리없는 그말\n" + "그대 사랑합니다";
         String output = RomanizerUtil.romanize(text, null);
-        System.out.println(text);
-        System.out.print(output);
+        Assert.assertTrue(output.contains("nabbayo cam "));
+        Assert.assertTrue(output.contains("geudae sarangh"));
     }
 }

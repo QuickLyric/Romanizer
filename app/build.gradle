@@ -18,8 +18,8 @@ android {
         applicationId "com.quicklyric.romanizer"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 3
-        versionName "1.0.2"
+        versionCode 6
+        versionName "1.0.2d"
     }
 
     signingConfigs {
@@ -63,4 +63,5 @@ dependencies {
     compile 'org.atilika.kuromoji:kuromoji:0.7.7'
     testCompile 'junit:junit:4.12'
     compile 'com.cybozu.labs:langdetect:+'
+    compile 'ch.acra:acra:4.9.2'
 }
