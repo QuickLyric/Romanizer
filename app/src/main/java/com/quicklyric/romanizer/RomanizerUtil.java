@@ -1,12 +1,12 @@
 package com.quicklyric.romanizer;
 
+import com.atilika.kuromoji.ipadic.Token;
+import com.atilika.kuromoji.ipadic.Tokenizer;
 import com.cybozu.labs.langdetect.Detector;
 import com.cybozu.labs.langdetect.DetectorFactory;
 import com.cybozu.labs.langdetect.LangDetectException;
 
 import org.acra.ACRA;
-import org.atilika.kuromoji.Token;
-import org.atilika.kuromoji.Tokenizer;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ class RomanizerUtil {
             boolean isInBrackets = false;
             if (tokenizer == null) {
                 try {
-                    tokenizer = Tokenizer.builder().build();
+                    tokenizer = new Tokenizer.Builder().build();
                 } catch (Exception e) {
                     e.printStackTrace();
                     ACRA.getErrorReporter().handleSilentException(e);
@@ -46,27 +46,27 @@ class RomanizerUtil {
             List<Token> list = tokenizer.tokenize(s);
             StringBuilder builder = new StringBuilder();
             for (Token token : list) {
-                if (token.getSurfaceForm().contains("]")) {
-                    builder.append(token.getSurfaceForm());
+                if (token.getSurface().contains("]")) {
+                    builder.append(token.getSurface());
                     isInBrackets = false;
                     continue;
-                } else if (token.getSurfaceForm().contains("[")) {
-                    builder.append(token.getSurfaceForm());
+                } else if (token.getSurface().contains("[")) {
+                    builder.append(token.getSurface());
                     isInBrackets = true;
                     continue;
                 }
                 if (isInBrackets) {
-                    builder.append(token.getSurfaceForm());
+                    builder.append(token.getSurface());
                     continue;
                 }
                 try {
-                    builder.append(token.isKnown() ? token.getReading() : token.getSurfaceForm());
+                    builder.append(token.isKnown() ? token.getReading() : token.getSurface());
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    builder.append(token.getSurfaceForm());
+                    builder.append(token.getSurface());
                     e.printStackTrace();
                     ACRA.getErrorReporter().handleSilentException(e);
                 }
-                if (!(token.getSurfaceForm().equals("<") || token.getSurfaceForm().equals("br") || token.getSurfaceForm().equals(">"))) {
+                if (!(token.getSurface().equals("<") || token.getSurface().equals("br") || token.getSurface().equals(">"))) {
                     if (!(builder.toString().endsWith(" ") || builder.toString().endsWith("\n")))
                         builder.append(" ");
                 }
