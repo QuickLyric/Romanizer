@@ -19,8 +19,8 @@ android {
         applicationId "com.quicklyric.romanizer"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 7
-        versionName "1.0.2e"
+        versionCode 8
+        versionName "1.0.3"
     }
 
     signingConfigs {
