@@ -16,10 +16,14 @@
 #   public *;
 #}
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+#-keepattributes Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,*Annotation*,EnclosingMethod
+-keepattributes Signature, Exceptions, Annotation
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+-dontwarn java.nio.file.Files
+-dontwarn java.nio.file.Path
+-dontwarn java.nio.file.OpenOption
+-dontwarn net.arnx.jsonic.**
+-dontwarn com.cybozu.labs.**
+
+-keep class !com.atilika.kuromoji.unidic.**, !com.atilika.kuromoji.naist.** { *; }
+-assumenosideeffects class com.atilika.kuromoji.unidic.**, com.atilika.kuromoji.naist.** { *; }

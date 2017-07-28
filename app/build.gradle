@@ -36,8 +36,8 @@ android {
     buildTypes {
         release {
             buildConfigField "Boolean", "REPORT_CRASH", 'true'
-            useProguard false
-            minifyEnabled false
+            useProguard true
+            minifyEnabled true
             signingConfig signingConfigs.release
             proguardFiles 'proguard-rules.pro', getDefaultProguardFile('proguard-android-optimize.txt')
         }
@@ -53,11 +53,13 @@ android {
     }
 
     packagingOptions {
-        pickFirst  'META-INF/CONTRIBUTORS.md'
+        pickFirst   'META-INF/CONTRIBUTORS.md'
+        pickFirst   'META-INF/LICENSE.md'
+        pickFirst   'META-INF/NOTICE.md'
     }
 
     aaptOptions {
-        cruncherEnabled false
+        cruncherEnabled true
     }
 }
 
@@ -65,7 +67,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'me.xuender:unidecode:0.0.7'
-    compile 'com.github.sdcr:kuromoji:fix_issue_96-SNAPSHOT'
+    compile 'com.github.geecko86:kuromoji:fix_issue_96-SNAPSHOT'
     testCompile 'junit:junit:4.12'
     compile 'com.cybozu.labs:langdetect:+'
     compile 'ch.acra:acra:4.9.2'
