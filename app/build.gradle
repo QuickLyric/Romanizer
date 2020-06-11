@@ -12,12 +12,12 @@ android {
         }
     }
 
-    compileSdkVersion 26
+    compileSdkVersion 29
     buildToolsVersion "26.0.3"
     defaultConfig {
         applicationId "com.quicklyric.romanizer"
         minSdkVersion 15
-        targetSdkVersion 26
+        targetSdkVersion 29
         versionCode 8
         versionName "1.0.3"
     }
@@ -52,7 +52,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support:appcompat-v7:26.+'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'me.xuender:unidecode:0.0.7'
     implementation 'com.github.geecko86:kuromoji:fix_issue_96-SNAPSHOT'
     testImplementation 'junit:junit:4.13'
