@@ -1,8 +1,7 @@
 apply plugin: 'com.android.application'
 
 repositories {
-    maven { url "http://www.atilika.org/nexus/content/repositories/atilika" }
-    maven { url "https://maven.google.com" }
+    google()
     maven { url 'https://jitpack.io' }
 }
 
@@ -13,32 +12,21 @@ android {
         }
     }
 
-    compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    compileSdkVersion 29
+    buildToolsVersion "26.0.3"
     defaultConfig {
         applicationId "com.quicklyric.romanizer"
         minSdkVersion 15
-        targetSdkVersion 26
+        targetSdkVersion 29
         versionCode 8
         versionName "1.0.3"
-    }
-
-    signingConfigs {
-
-        release {
-            storeFile file('../../release.keystore')
-            storePassword RELEASE_STORE_PASSWORD
-            keyAlias RELEASE_KEY_ALIAS
-            keyPassword RELEASE_KEY_PASSWORD
-        }
     }
 
     buildTypes {
         release {
             buildConfigField "Boolean", "REPORT_CRASH", 'true'
-            useProguard true
             minifyEnabled true
-            signingConfig signingConfigs.release
+            shrinkResources true
             proguardFiles 'proguard-rules.pro', getDefaultProguardFile('proguard-android-optimize.txt')
         }
 
@@ -64,11 +52,10 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:26.+'
-    compile 'me.xuender:unidecode:0.0.7'
-    compile 'com.github.geecko86:kuromoji:fix_issue_96-SNAPSHOT'
-    testCompile 'junit:junit:4.12'
-    compile 'com.cybozu.labs:langdetect:+'
-    compile 'ch.acra:acra:4.9.2'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'me.xuender:unidecode:0.0.7'
+    implementation 'com.github.geecko86:kuromoji:fix_issue_96-SNAPSHOT'
+    testImplementation 'junit:junit:4.13'
+    implementation 'com.cybozu.labs:langdetect:+'
+    implementation 'ch.acra:acra:4.9.2'
 }
